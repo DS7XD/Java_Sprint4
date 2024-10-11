@@ -8,6 +8,8 @@ public class Automovel {
     private int anoAutomovel;
     private String clienteCpfCliente;
 
+    public Automovel() {}
+    
     public Automovel(String placaAutomovel, String marcaAutomovel, String modeloAutomovel, String corAutomovel, int anoAutomovel, String clienteCpfCliente) {
         this.placaAutomovel = placaAutomovel;
         this.marcaAutomovel = marcaAutomovel;

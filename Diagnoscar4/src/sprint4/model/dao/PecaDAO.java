@@ -13,14 +13,14 @@ public class PecaDAO {
 	    String sql = "INSERT INTO Peca (Id_Peca, Tipo_Peca, Nome_Peca, Endereco_Peca) VALUES (?, ?, ?, ?)";
 	    
 	    try (Connection conn = ConnDAO.conectar();
-	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+	         PreparedStatement ps = conn.prepareStatement(sql)) {
 	        
-	        stmt.setInt(1, peca.getIdPeca());
-	        stmt.setString(2, peca.getTipoPeca());
-	        stmt.setString(3, peca.getNomePeca());
-	        stmt.setString(4, peca.getEndereco_Peca()); 
+	        ps.setInt(1, peca.getIdPeca());
+	        ps.setString(2, peca.getTipoPeca());
+	        ps.setString(3, peca.getNomePeca());
+	        ps.setString(4, peca.getEndereco_Peca()); 
 	        
-	        int rowsInserted = stmt.executeUpdate();
+	        int rowsInserted = ps.executeUpdate();
 	        if (rowsInserted > 0) {
 	            System.out.println("A peça foi inserida com sucesso!");
 	        }

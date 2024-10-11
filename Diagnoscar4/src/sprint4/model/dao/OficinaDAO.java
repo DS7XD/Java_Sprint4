@@ -16,20 +16,20 @@ public class OficinaDAO {
         String sql = "INSERT INTO Oficina (Endereco_Oficina, Cnpj_Oficina, Nome_Oficina, Avaliacao_Oficina, Especializacao_Oficina) VALUES (?, ?, ?, ?, ?)";
 
         Connection conn = null;
-        PreparedStatement stmt = null;
+        PreparedStatement ps = null;
 
         try {
             conn = ConnDAO.conectar();
             conn.setAutoCommit(false);
 
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, oficina.getEnderecoOficina());
-            stmt.setString(2, oficina.getCnpjOficina());
-            stmt.setString(3, oficina.getNomeOficina());
-            stmt.setDouble(4, oficina.getAvaliacaoOficina());
-            stmt.setString(5, oficina.getEspecializacaoOficina());
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, oficina.getEnderecoOficina());
+            ps.setString(2, oficina.getCnpjOficina());
+            ps.setString(3, oficina.getNomeOficina());
+            ps.setDouble(4, oficina.getAvaliacaoOficina());
+            ps.setString(5, oficina.getEspecializacaoOficina());
 
-            int rowsInserted = stmt.executeUpdate();
+            int rowsInserted = ps.executeUpdate();
             conn.commit();
 
             if (rowsInserted > 0) {
@@ -51,7 +51,7 @@ public class OficinaDAO {
             return false;
         } finally {
             try {
-                if (stmt != null) stmt.close();
+                if (ps != null) ps.close();
                 if (conn != null) ConnDAO.desconectar(conn);
             } catch (SQLException closeEx) {
                 closeEx.printStackTrace();

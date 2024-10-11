@@ -15,19 +15,19 @@ public class Pre_DiagnosticoDAO {
         String sql = "INSERT INTO Pre_Diagnostico (ID_PreDiagnostico, Nivel_Diagnostico, Diagnostico, Assistente_ID_Chatbot) VALUES (?, ?, ?, ?)";
 
         Connection conn = null;
-        PreparedStatement stmt = null;
+        PreparedStatement ps = null;
 
         try {
             conn = ConnDAO.conectar();
             conn.setAutoCommit(false);
 
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, preDiagnostico.getIdPreDiagnostico());
-            stmt.setInt(2, preDiagnostico.getNivelDiagnostico());
-            stmt.setString(3, preDiagnostico.getDiagnostico());
-            stmt.setString(4, preDiagnostico.getAssistenteIdChatbot());
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, preDiagnostico.getIdPreDiagnostico());
+            ps.setInt(2, preDiagnostico.getNivelDiagnostico());
+            ps.setString(3, preDiagnostico.getDiagnostico());
+            ps.setString(4, preDiagnostico.getAssistenteIdChatbot());
 
-            int rowsInserted = stmt.executeUpdate();
+            int rowsInserted = ps.executeUpdate();
             conn.commit();
 
             if (rowsInserted > 0) {
@@ -49,7 +49,7 @@ public class Pre_DiagnosticoDAO {
             return false;
         } finally {
             try {
-                if (stmt != null) stmt.close();
+                if (ps != null) ps.close();
                 if (conn != null) ConnDAO.desconectar(conn);
             } catch (SQLException closeEx) {
                 closeEx.printStackTrace();

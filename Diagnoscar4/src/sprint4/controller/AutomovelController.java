@@ -15,10 +15,10 @@ public class AutomovelController {
     public void inserirAutomovel() {
         Scanner scanner = new Scanner(System.in);
         
-        System.out.print("Digite o CPF do cliente: ");
+        System.out.print("Digite o CPF de quem o automóvel pertence: ");
         String cpf = scanner.nextLine();
 
-        System.out.print("Digite a placa do automóvel ( Aceitemos placa Mercosul ou placa Brasileira ) ");
+        System.out.print("Digite a placa do automóvel: ");
         String placa = scanner.nextLine();
 
         System.out.print("Digite a marca do automóvel: ");
@@ -32,12 +32,11 @@ public class AutomovelController {
 
         System.out.print("Digite o ano do automóvel: ");
         int ano = scanner.nextInt();
-        scanner.nextLine();
 
         Automovel automovel = new Automovel(placa, marca, modelo, cor, ano, cpf);
 
         if (automovelDAO.inserirAutomovel(automovel)) {
-            System.out.println("Automóvel adicionado com sucesso!");
+            System.out.println(" ");
         } else {
             System.out.println("Falha ao adicionar automóvel.");
         }

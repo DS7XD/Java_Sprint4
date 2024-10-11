@@ -15,20 +15,20 @@ public class Loja_ParceiraDAO {
         String sql = "INSERT INTO Loja_Parceira (Endereco_Loja, Cnpj_Loja, Nome_Loja, Avaliacao_Loja, Especializacao_Loja) VALUES (?, ?, ?, ?, ?)";
 
         Connection conn = null;
-        PreparedStatement stmt = null;
+        PreparedStatement ps = null;
 
         try {
             conn = ConnDAO.conectar();
             conn.setAutoCommit(false);
 
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, lojaParceira.getEndereco_loja());
-            stmt.setString(2, lojaParceira.getCnpj());
-            stmt.setString(3, lojaParceira.getNome_loja());
-            stmt.setDouble(4, lojaParceira.getAvaliacao());
-            stmt.setString(5, lojaParceira.getEspecializacao());
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, lojaParceira.getEndereco_loja());
+            ps.setString(2, lojaParceira.getCnpj());
+            ps.setString(3, lojaParceira.getNome_loja());
+            ps.setDouble(4, lojaParceira.getAvaliacao());
+            ps.setString(5, lojaParceira.getEspecializacao());
 
-            int rowsInserted = stmt.executeUpdate();
+            int rowsInserted = ps.executeUpdate();
             conn.commit();
 
             if (rowsInserted > 0) {
@@ -50,7 +50,7 @@ public class Loja_ParceiraDAO {
             return false;
         } finally {
             try {
-                if (stmt != null) stmt.close();
+                if (ps != null) ps.close();
                 if (conn != null) ConnDAO.desconectar(conn);
             } catch (SQLException closeEx) {
                 closeEx.printStackTrace();

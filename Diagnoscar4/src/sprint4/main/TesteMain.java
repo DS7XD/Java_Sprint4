@@ -2,33 +2,39 @@ package sprint4.main;
 
 import java.util.Scanner;
 
-import sprint4.controller.*;
-import sprint4.model.*;
+import sprint4.controller.ClienteController;
+import sprint4.controller.AutomovelController;
+import sprint4.controller.LoginController;
 
 public class TesteMain {
 
     public static void main(String[] args) {
-	ClienteController ClienteController = new ClienteController();
-	AutomovelController AutomovelController = new AutomovelController();
-	
+        ClienteController clienteController = new ClienteController();
+        AutomovelController automovelController = new AutomovelController();
+        LoginController loginController = new LoginController();
+
         Scanner scanner = new Scanner(System.in);
         int opcao;
 
         do {
             System.out.println("\nMenu:");
-            System.out.println("1. Fazer o Cadastro de Cliente");
+            System.out.println("1. Cadastro");
+            System.out.println("2. Login");
             System.out.println("3. Sair");
             System.out.print("Escolha uma opção (1-3): ");
 
             opcao = scanner.nextInt();
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
-                    ClienteController.cadastrarCliente();
-                    AutomovelController.inserirAutomovel();
+                    System.out.println("\nCadastro Iniciado:");
+                    clienteController.cadastrarCliente();
+                    automovelController.inserirAutomovel();
                     break;
                 case 2:
-                    System.out.println("fo");
+                    System.out.println("\nLogin Iniciado:");
+                    loginController.realizarLogin();
                     break;
                 case 3:
                     System.out.println("Saindo do programa...");
@@ -36,7 +42,7 @@ public class TesteMain {
                 default:
                     System.out.println("Opção inválida! Tente novamente.");
             }
-        } while (opcao != 4);
+        } while (opcao != 3);
 
         scanner.close();
     }
