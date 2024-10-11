@@ -14,8 +14,11 @@ public class AutomovelController {
 
     public void inserirAutomovel() {
         Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Digite o CPF do cliente: ");
+        String cpf = scanner.nextLine();
 
-        System.out.print("Digite a placa do automóvel: ");
+        System.out.print("Digite a placa do automóvel ( Aceitemos placa Mercosul ou placa Brasileira ) ");
         String placa = scanner.nextLine();
 
         System.out.print("Digite a marca do automóvel: ");
@@ -30,9 +33,6 @@ public class AutomovelController {
         System.out.print("Digite o ano do automóvel: ");
         int ano = scanner.nextInt();
         scanner.nextLine();
-
-        System.out.print("Digite o CPF do cliente: ");
-        String cpf = scanner.nextLine();
 
         Automovel automovel = new Automovel(placa, marca, modelo, cor, ano, cpf);
 

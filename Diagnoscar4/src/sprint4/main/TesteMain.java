@@ -16,8 +16,7 @@ public class TesteMain {
 
         do {
             System.out.println("\nMenu:");
-            System.out.println("1. Fazer o Cadastro 1");
-            System.out.println("2. Função 2");
+            System.out.println("1. Fazer o Cadastro de Cliente");
             System.out.println("3. Sair");
             System.out.print("Escolha uma opção (1-3): ");
 
@@ -26,9 +25,10 @@ public class TesteMain {
             switch (opcao) {
                 case 1:
                     ClienteController.cadastrarCliente();
+                    AutomovelController.inserirAutomovel();
                     break;
                 case 2:
-                    
+                    System.out.println("fo");
                     break;
                 case 3:
                     System.out.println("Saindo do programa...");
