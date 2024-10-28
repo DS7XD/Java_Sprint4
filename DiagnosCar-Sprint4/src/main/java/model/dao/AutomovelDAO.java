@@ -1,5 +1,8 @@
 package model.dao;
 
+import connection.ConnDAO;
+import model.vo.Automovel;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,91 +10,110 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.vo.Automovel;
-import conection.ConnDAO;
-
 public class AutomovelDAO {
 
-    public boolean inserirAutomovel(Automovel automovel) {
+    public void inserir(Automovel automovel) {
         String sql = "INSERT INTO Automovel (Placa_Automovel, Marca_Automovel, Modelo_Automovel, Cor_Automovel, Ano_Automovel, Cliente_CPF_Cliente) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = ConnDAO.conectar(); 
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            
-            ps.setString(1, automovel.getPlacaAutomovel());
-            ps.setString(2, automovel.getMarcaAutomovel());
-            ps.setString(3, automovel.getModeloAutomovel());
-            ps.setString(4, automovel.getCorAutomovel());
-            ps.setInt(5, automovel.getAnoAutomovel());
-            ps.setString(6, automovel.getClienteCpfCliente());
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setString(1, automovel.getPlacaAutomovel());
+            pstmt.setString(2, automovel.getMarcaAutomovel());
+            pstmt.setString(3, automovel.getModeloAutomovel());
+            pstmt.setString(4, automovel.getCorAutomovel());
+            pstmt.setInt(5, automovel.getAnoAutomovel());
+            pstmt.setString(6, automovel.getClienteCpfCliente());
+            pstmt.executeUpdate();
 
-            int rowsInserted = ps.executeUpdate();
-
-            if (rowsInserted > 0) {
-                System.out.println("Automóvel cadastrado com sucesso!");
-                return true;
-            } else {
-                System.out.println("Nenhum automóvel foi inserido.");
-                return false;
-            }
         } catch (SQLException e) {
-            System.out.println("Erro ao inserir automóvel: " + e.getMessage());
             e.printStackTrace();
-            return false;
         }
     }
 
-    public boolean removerAutomovelPorPlaca(String placaAutomovel) {
+    public Automovel buscarPorPlaca(String placa) {
+        String sql = "SELECT * FROM Automovel WHERE Placa_Automovel = ?";
+        Automovel automovel = null;
+
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setString(1, placa);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                automovel = new Automovel(
+                    rs.getString("Placa_Automovel"),
+                    rs.getString("Marca_Automovel"),
+                    rs.getString("Modelo_Automovel"),
+                    rs.getString("Cor_Automovel"),
+                    rs.getInt("Ano_Automovel"),
+                    rs.getString("Cliente_CPF_Cliente")
+                );
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return automovel;
+    }
+
+    public void atualizar(Automovel automovel) {
+        String sql = "UPDATE Automovel SET Marca_Automovel = ?, Modelo_Automovel = ?, Cor_Automovel = ?, Ano_Automovel = ?, Cliente_CPF_Cliente = ? WHERE Placa_Automovel = ?";
+
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setString(1, automovel.getMarcaAutomovel());
+            pstmt.setString(2, automovel.getModeloAutomovel());
+            pstmt.setString(3, automovel.getCorAutomovel());
+            pstmt.setInt(4, automovel.getAnoAutomovel());
+            pstmt.setString(5, automovel.getClienteCpfCliente());
+            pstmt.setString(6, automovel.getPlacaAutomovel());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void excluir(String placa) {
         String sql = "DELETE FROM Automovel WHERE Placa_Automovel = ?";
 
-        try (Connection conn = ConnDAO.conectar(); 
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            
-            ps.setString(1, placaAutomovel);
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setString(1, placa);
+            pstmt.executeUpdate();
 
-            int rowsDeleted = ps.executeUpdate();
-
-            if (rowsDeleted > 0) {
-                System.out.println("Automóvel removido com sucesso!");
-                return true;
-            } else {
-                System.out.println("Nenhum automóvel encontrado com a placa informada.");
-                return false;
-            }
         } catch (SQLException e) {
-            System.out.println("Erro ao remover automóvel: " + e.getMessage());
             e.printStackTrace();
-            return false;
         }
     }
 
-    public List<Automovel> selecionarAutomoveisPorCpf(String cpfCliente) {
-        String sql = "SELECT * FROM Automovel WHERE Cliente_CPF_Cliente = ?";
+    // Método para listar todos os automóveis
+    public List<Automovel> listarTodos() {
+        String sql = "SELECT * FROM Automovel";
         List<Automovel> automoveis = new ArrayList<>();
 
-        try (Connection conn = ConnDAO.conectar(); 
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            
-            ps.setString(1, cpfCliente);
-            ResultSet rs = ps.executeQuery();
-
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+             
             while (rs.next()) {
-                Automovel automovel = new Automovel();
-                automovel.setPlacaAutomovel(rs.getString("Placa_Automovel"));
-                automovel.setMarcaAutomovel(rs.getString("Marca_Automovel"));
-                automovel.setModeloAutomovel(rs.getString("Modelo_Automovel"));
-                automovel.setCorAutomovel(rs.getString("Cor_Automovel"));
-                automovel.setAnoAutomovel(rs.getInt("Ano_Automovel"));
-                automovel.setClienteCpfCliente(rs.getString("Cliente_CPF_Cliente"));
-                
+                Automovel automovel = new Automovel(
+                    rs.getString("Placa_Automovel"),
+                    rs.getString("Marca_Automovel"),
+                    rs.getString("Modelo_Automovel"),
+                    rs.getString("Cor_Automovel"),
+                    rs.getInt("Ano_Automovel"),
+                    rs.getString("Cliente_CPF_Cliente")
+                );
                 automoveis.add(automovel);
             }
-            
-            if (automoveis.isEmpty()) {
-                System.out.println("Nenhum automóvel encontrado para o CPF informado.");
-            }
+
         } catch (SQLException e) {
-            System.out.println("Erro ao selecionar automóveis: " + e.getMessage());
             e.printStackTrace();
         }
 

@@ -3,63 +3,57 @@ package model.vo;
 import java.util.Date;
 
 public class Chatbot {
-    private String idChatbot;
-    private Date horarioChat;
-    private String planoChatbot;
-    private String tipoDeChat;
-    private String clienteCpfCliente;
+    private String idChatbot;          // ID_Chatbot
+    private Date horarioChat;          // Horario_Chat
+    private String plano;              // Plano
+    private String clienteCpfCliente;  // Cliente_CPF_Cliente
+    private String placaAutomovel;     // Placa_Automovel
 
-    public Chatbot(String idChatbot, Date horarioChat, String planoChatbot, String tipoDeChat, String clienteCpfCliente) {
+    public Chatbot(String idChatbot, Date horarioChat, String plano, String clienteCpfCliente, String placaAutomovel) {
         this.idChatbot = idChatbot;
         this.horarioChat = horarioChat;
-        this.planoChatbot = planoChatbot;
-        this.tipoDeChat = tipoDeChat;
+        this.plano = plano;
+        this.clienteCpfCliente = clienteCpfCliente;
+        this.placaAutomovel = placaAutomovel;
+    }
+
+    public String getIdChatbot() {
+        return idChatbot;
+    }
+
+    public void setIdChatbot(String idChatbot) {
+        this.idChatbot = idChatbot;
+    }
+
+    public Date getHorarioChat() {
+        return horarioChat;
+    }
+
+    public void setHorarioChat(Date horarioChat) {
+        this.horarioChat = horarioChat;
+    }
+
+    public String getPlano() {
+        return plano;
+    }
+
+    public void setPlano(String plano) {
+        this.plano = plano;
+    }
+
+    public String getClienteCpfCliente() {
+        return clienteCpfCliente;
+    }
+
+    public void setClienteCpfCliente(String clienteCpfCliente) {
         this.clienteCpfCliente = clienteCpfCliente;
     }
 
-	public String getIdChatbot() {
-		return idChatbot;
-	}
+    public String getPlacaAutomovel() {
+        return placaAutomovel;
+    }
 
-	public void setIdChatbot(String idChatbot) {
-		this.idChatbot = idChatbot;
-	}
-
-	public Date getHorarioChat() {
-		return horarioChat;
-	}
-
-	public void setHorarioChat(Date horarioChat) {
-		this.horarioChat = horarioChat;
-	}
-
-	public String getPlanoChatbot() {
-		return planoChatbot;
-	}
-
-	public void setPlanoChatbot(String planoChatbot) {
-		this.planoChatbot = planoChatbot;
-	}
-
-	public String getTipoDeChat() {
-		return tipoDeChat;
-	}
-
-	public void setTipoDeChat(String tipoDeChat) {
-		this.tipoDeChat = tipoDeChat;
-	}
-
-	public String getClienteCpfCliente() {
-		return clienteCpfCliente;
-	}
-
-	public void setClienteCpfCliente(String clienteCpfCliente) {
-		this.clienteCpfCliente = clienteCpfCliente;
-	}
-
-    
+    public void setPlacaAutomovel(String placaAutomovel) {
+        this.placaAutomovel = placaAutomovel;
+    }
 }
-
-
-
-

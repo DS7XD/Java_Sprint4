@@ -1,61 +1,57 @@
 package model.vo;
 
 public class Loja_Parceira {
-    private String endereco_loja;
-    private String cnpj;
-    private String nome_loja;
-    private double avaliacao;
-    private String especializacao;
+    private String enderecoLoja;          // Endereco_Loja
+    private String cnpjLoja;              // Cnpj_Loja
+    private String nomeLoja;              // Nome_Loja
+    private Double avaliacaoLoja;         // Avaliacao_Loja
+    private String especializacaoLoja;    // Especializacao_Loja
 
-    public Loja_Parceira(String endereco_loja, String cnpj, String nome_loja, double avaliacao, String especializacao) {
-        this.endereco_loja = endereco_loja;
-        this.cnpj = cnpj;
-        this.nome_loja = nome_loja;
-        this.avaliacao = avaliacao;
-        this.especializacao = especializacao;
+    public Loja_Parceira(String enderecoLoja, String cnpjLoja, String nomeLoja, Double avaliacaoLoja, String especializacaoLoja) {
+        this.enderecoLoja = enderecoLoja;
+        this.cnpjLoja = cnpjLoja;
+        this.nomeLoja = nomeLoja;
+        this.avaliacaoLoja = avaliacaoLoja;
+        this.especializacaoLoja = especializacaoLoja;
     }
 
-    public String getEndereco_loja() {
-        return endereco_loja;
+    public String getEnderecoLoja() {
+        return enderecoLoja;
     }
 
-    public void setEndereco_loja(String endereco_loja) {
-        this.endereco_loja = endereco_loja;
+    public void setEnderecoLoja(String enderecoLoja) {
+        this.enderecoLoja = enderecoLoja;
     }
 
-    public String getCnpj() {
-        return cnpj;
+    public String getCnpjLoja() {
+        return cnpjLoja;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public void setCnpjLoja(String cnpjLoja) {
+        this.cnpjLoja = cnpjLoja;
     }
 
-    public String getNome_loja() {
-        return nome_loja;
+    public String getNomeLoja() {
+        return nomeLoja;
     }
 
-    public void setNome_loja(String nome_loja) {
-        this.nome_loja = nome_loja;
+    public void setNomeLoja(String nomeLoja) {
+        this.nomeLoja = nomeLoja;
     }
 
-    public double getAvaliacao() {
-        return avaliacao;
+    public Double getAvaliacaoLoja() {
+        return avaliacaoLoja;
     }
 
-    public void setAvaliacao(double avaliacao) {
-        this.avaliacao = avaliacao;
+    public void setAvaliacaoLoja(Double avaliacaoLoja) {
+        this.avaliacaoLoja = avaliacaoLoja;
     }
 
-    public String getEspecializacao() {
-        return especializacao;
+    public String getEspecializacaoLoja() {
+        return especializacaoLoja;
     }
 
-    public void setEspecializacao(String especializacao) {
-        this.especializacao = especializacao;
+    public void setEspecializacaoLoja(String especializacaoLoja) {
+        this.especializacaoLoja = especializacaoLoja;
     }
-
 }
-
-
-

@@ -1,97 +1,110 @@
 package model.vo;
 
+import java.util.Date;
+
 public class Cliente {
-    private String cpfCliente;
-    private String cnhCliente;
-    private String rgCliente;
-    private String nomeCliente;
-    private String sobrenomeCliente;
+    private String cpfCliente;        
+    private String cnhCliente;        
+    private String rgCliente;         
+    private String nomeCliente;       
+    private String sobrenomeCliente;  
+    private Date dataNascCliente;     
+    private String emailCliente;      
     private String senhaCliente;
-    private String emailCliente;
     private String telefoneCliente;
     private String enderecoCliente;
 
-    public Cliente(String cpfCliente, String cnhCliente, String rgCliente, String nomeCliente, String sobrenomeCliente, String emailCliente, String senhaCliente, String telefoneCliente, String enderecoCliente) {
+    public Cliente(String cpfCliente, String cnhCliente, String rgCliente, String nomeCliente, String sobrenomeCliente, Date dataNascCliente, String emailCliente, String senhaCliente, String telefoneCliente, String enderecoCliente) {
         this.cpfCliente = cpfCliente;
         this.cnhCliente = cnhCliente;
         this.rgCliente = rgCliente;
         this.nomeCliente = nomeCliente;
         this.sobrenomeCliente = sobrenomeCliente;
+        this.dataNascCliente = dataNascCliente;
         this.emailCliente = emailCliente;
         this.senhaCliente = senhaCliente;
         this.telefoneCliente = telefoneCliente;
         this.enderecoCliente = enderecoCliente;
     }
 
-	public String getCpfCliente() {
-		return cpfCliente;
-	}
+    // Getters e Setters
+    public String getCpfCliente() {
+        return cpfCliente;
+    }
 
-	public void setCpfCliente(String cpfCliente) {
-		this.cpfCliente = cpfCliente;
-	}
+    public void setCpfCliente(String cpfCliente) {
+        this.cpfCliente = cpfCliente;
+    }
 
-	public String getCnhCliente() {
-		return cnhCliente;
-	}
+    public String getCnhCliente() {
+        return cnhCliente;
+    }
 
-	public void setCnhCliente(String cnhCliente) {
-		this.cnhCliente = cnhCliente;
-	}
+    public void setCnhCliente(String cnhCliente) {
+        this.cnhCliente = cnhCliente;
+    }
 
-	public String getNomeCliente() {
-		return nomeCliente;
-	}
+    public String getRgCliente() {
+        return rgCliente;
+    }
 
-	public void setNomeCliente(String nomeCliente) {
-		this.nomeCliente = nomeCliente;
-	}
+    public void setRgCliente(String rgCliente) {
+        this.rgCliente = rgCliente;
+    }
 
-	public String getSobrenomeCliente() {
-		return sobrenomeCliente;
-	}
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
 
-	public void setSobrenomeCliente(String sobrenomeCliente) {
-		this.sobrenomeCliente = sobrenomeCliente;
-	}
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
 
-	public String getEmailCliente() {
-		return emailCliente;
-	}
+    public String getSobrenomeCliente() {
+        return sobrenomeCliente;
+    }
 
-	public void setEmailCliente(String emailCliente) {
-		this.emailCliente = emailCliente;
-	}
+    public void setSobrenomeCliente(String sobrenomeCliente) {
+        this.sobrenomeCliente = sobrenomeCliente;
+    }
 
-	public String getTelefoneCliente() {
-		return telefoneCliente;
-	}
+    public Date getDataNascCliente() {
+        return dataNascCliente;
+    }
 
-	public void setTelefoneCliente(String telefoneCliente) {
-		this.telefoneCliente = telefoneCliente;
-	}
+    public void setDataNascCliente(Date dataNascCliente) {
+        this.dataNascCliente = dataNascCliente;
+    }
 
-	public String getEnderecoCliente() {
-		return enderecoCliente;
-	}
+    public String getEmailCliente() {
+        return emailCliente;
+    }
 
-	public void setEnderecoCliente(String enderecoCliente) {
-		this.enderecoCliente = enderecoCliente;
-	}
+    public void setEmailCliente(String emailCliente) {
+        this.emailCliente = emailCliente;
+    }
 
-	public String getSenhaCliente() {
-		return senhaCliente;
-	}
+    public String getSenhaCliente() {
+        return senhaCliente;
+    }
 
-	public void setSenhaCliente(String senhaCliente) {
-		this.senhaCliente = senhaCliente;
-	}
+    public void setSenhaCliente(String senhaCliente) {
+        this.senhaCliente = senhaCliente;
+    }
 
-	public String getRgCliente() {
-		return rgCliente;
-	}
+    public String getTelefoneCliente() {
+        return telefoneCliente;
+    }
 
-	public void setRgCliente(String rgCliente) {
-		this.rgCliente = rgCliente;
-	} 
+    public void setTelefoneCliente(String telefoneCliente) {
+        this.telefoneCliente = telefoneCliente;
+    }
+
+    public String getEnderecoCliente() {
+        return enderecoCliente;
+    }
+
+    public void setEnderecoCliente(String enderecoCliente) {
+        this.enderecoCliente = enderecoCliente;
+    }
 }

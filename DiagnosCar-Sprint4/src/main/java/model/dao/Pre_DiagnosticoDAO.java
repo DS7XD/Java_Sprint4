@@ -1,59 +1,123 @@
 package model.dao;
 
+import connection.ConnDAO;
+import model.vo.Pre_Diagnostico;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import model.vo.Pre_Diagnostico;
-import conection.ConnDAO;
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Pre_DiagnosticoDAO {
 
-    public boolean inserirPreDiagnostico(Pre_Diagnostico preDiagnostico) {
-        String sql = "INSERT INTO Pre_Diagnostico (ID_PreDiagnostico, Nivel_Diagnostico, Diagnostico, Assistente_ID_Chatbot) VALUES (?, ?, ?, ?)";
+    public void inserir(Pre_Diagnostico preDiagnostico) {
+        String sql = "INSERT INTO Pre_Diagnostico (ID_PreDiagnostico, Nivel_Diagnostico, Diagnostico, " +
+                     "Assistente_ID_Chatbot, Cliente_CPF_Cliente, Placa_Automovel) VALUES (?, ?, ?, ?, ?, ?)";
 
-        Connection conn = null;
-        PreparedStatement ps = null;
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setString(1, preDiagnostico.getIdPreDiagnostico());
+            pstmt.setInt(2, preDiagnostico.getNivelDiagnostico());
+            pstmt.setString(3, preDiagnostico.getDiagnostico());
+            pstmt.setString(4, preDiagnostico.getAssistenteIdChatbot());
+            pstmt.setString(5, preDiagnostico.getClienteCpfCliente());
+            pstmt.setString(6, preDiagnostico.getPlacaAutomovel());
+            pstmt.executeUpdate();
 
-        try {
-            conn = ConnDAO.conectar();
-            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, preDiagnostico.getIdPreDiagnostico());
-            ps.setInt(2, preDiagnostico.getNivelDiagnostico());
-            ps.setString(3, preDiagnostico.getDiagnostico());
-            ps.setString(4, preDiagnostico.getAssistenteIdChatbot());
+    public Pre_Diagnostico buscarPorId(String idPreDiagnostico) {
+        String sql = "SELECT * FROM Pre_Diagnostico WHERE ID_PreDiagnostico = ?";
+        Pre_Diagnostico preDiagnostico = null;
 
-            int rowsInserted = ps.executeUpdate();
-            conn.commit();
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setString(1, idPreDiagnostico);
+            ResultSet rs = pstmt.executeQuery();
 
-            if (rowsInserted > 0) {
-                System.out.println("Pré-Diagnóstico inserido com sucesso!");
-                return true;
-            } else {
-                System.out.println("Nenhum pré-diagnóstico foi inserido.");
-                return false;
+            if (rs.next()) {
+                preDiagnostico = new Pre_Diagnostico(
+                    rs.getString("ID_PreDiagnostico"),
+                    rs.getInt("Nivel_Diagnostico"),
+                    rs.getString("Diagnostico"),
+                    rs.getString("Assistente_ID_Chatbot"),
+                    rs.getString("Cliente_CPF_Cliente"),
+                    rs.getString("Placa_Automovel")
+                );
             }
 
         } catch (SQLException e) {
-            try {
-                if (conn != null) conn.rollback();
-            } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
-            }
             e.printStackTrace();
-            System.out.println("Erro ao inserir pré-diagnóstico: " + e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (conn != null) ConnDAO.desconectar(conn);
-            } catch (SQLException closeEx) {
-                closeEx.printStackTrace();
-            }
         }
+
+        return preDiagnostico;
+    }
+
+    public void atualizar(Pre_Diagnostico preDiagnostico) {
+        String sql = "UPDATE Pre_Diagnostico SET Nivel_Diagnostico = ?, Diagnostico = ?, " +
+                     "Assistente_ID_Chatbot = ?, Cliente_CPF_Cliente = ?, Placa_Automovel = ? WHERE ID_PreDiagnostico = ?";
+
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setInt(1, preDiagnostico.getNivelDiagnostico());
+            pstmt.setString(2, preDiagnostico.getDiagnostico());
+            pstmt.setString(3, preDiagnostico.getAssistenteIdChatbot());
+            pstmt.setString(4, preDiagnostico.getClienteCpfCliente());
+            pstmt.setString(5, preDiagnostico.getPlacaAutomovel());
+            pstmt.setString(6, preDiagnostico.getIdPreDiagnostico());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void excluir(String idPreDiagnostico) {
+        String sql = "DELETE FROM Pre_Diagnostico WHERE ID_PreDiagnostico = ?";
+
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+             
+            pstmt.setString(1, idPreDiagnostico);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Pre_Diagnostico> listarTodos() {
+        String sql = "SELECT * FROM Pre_Diagnostico";
+        List<Pre_Diagnostico> preDiagnosticos = new ArrayList<>();
+
+        try (Connection conn = ConnDAO.conectar();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+             
+            while (rs.next()) {
+                Pre_Diagnostico preDiagnostico = new Pre_Diagnostico(
+                    rs.getString("ID_PreDiagnostico"),
+                    rs.getInt("Nivel_Diagnostico"),
+                    rs.getString("Diagnostico"),
+                    rs.getString("Assistente_ID_Chatbot"),
+                    rs.getString("Cliente_CPF_Cliente"),
+                    rs.getString("Placa_Automovel")
+                );
+                preDiagnosticos.add(preDiagnostico);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return preDiagnosticos;
     }
 }
