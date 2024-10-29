@@ -13,7 +13,7 @@ import java.util.List;
 public class AutomovelDAO {
 
     public void inserir(Automovel automovel) {
-        String sql = "INSERT INTO Automovel (Placa_Automovel, Marca_Automovel, Modelo_Automovel, Cor_Automovel, Ano_Automovel, Cliente_CPF_Cliente) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Automovel (Placa_Automovel, Marca_Automovel, Modelo_Automovel, Ano_Automovel, Cliente_CPF_Cliente) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conn = ConnDAO.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -21,9 +21,8 @@ public class AutomovelDAO {
             pstmt.setString(1, automovel.getPlacaAutomovel());
             pstmt.setString(2, automovel.getMarcaAutomovel());
             pstmt.setString(3, automovel.getModeloAutomovel());
-            pstmt.setString(4, automovel.getCorAutomovel());
-            pstmt.setInt(5, automovel.getAnoAutomovel());
-            pstmt.setString(6, automovel.getClienteCpfCliente());
+            pstmt.setInt(4, automovel.getAnoAutomovel());
+            pstmt.setString(5, automovel.getClienteCpfCliente());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -46,7 +45,6 @@ public class AutomovelDAO {
                     rs.getString("Placa_Automovel"),
                     rs.getString("Marca_Automovel"),
                     rs.getString("Modelo_Automovel"),
-                    rs.getString("Cor_Automovel"),
                     rs.getInt("Ano_Automovel"),
                     rs.getString("Cliente_CPF_Cliente")
                 );
@@ -60,17 +58,16 @@ public class AutomovelDAO {
     }
 
     public void atualizar(Automovel automovel) {
-        String sql = "UPDATE Automovel SET Marca_Automovel = ?, Modelo_Automovel = ?, Cor_Automovel = ?, Ano_Automovel = ?, Cliente_CPF_Cliente = ? WHERE Placa_Automovel = ?";
+        String sql = "UPDATE Automovel SET Marca_Automovel = ?, Modelo_Automovel = ?, Ano_Automovel = ?, Cliente_CPF_Cliente = ? WHERE Placa_Automovel = ?";
 
         try (Connection conn = ConnDAO.conectar();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
              
             pstmt.setString(1, automovel.getMarcaAutomovel());
             pstmt.setString(2, automovel.getModeloAutomovel());
-            pstmt.setString(3, automovel.getCorAutomovel());
-            pstmt.setInt(4, automovel.getAnoAutomovel());
-            pstmt.setString(5, automovel.getClienteCpfCliente());
-            pstmt.setString(6, automovel.getPlacaAutomovel());
+            pstmt.setInt(3, automovel.getAnoAutomovel());
+            pstmt.setString(4, automovel.getClienteCpfCliente());
+            pstmt.setString(5, automovel.getPlacaAutomovel());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -106,7 +103,6 @@ public class AutomovelDAO {
                     rs.getString("Placa_Automovel"),
                     rs.getString("Marca_Automovel"),
                     rs.getString("Modelo_Automovel"),
-                    rs.getString("Cor_Automovel"),
                     rs.getInt("Ano_Automovel"),
                     rs.getString("Cliente_CPF_Cliente")
                 );
