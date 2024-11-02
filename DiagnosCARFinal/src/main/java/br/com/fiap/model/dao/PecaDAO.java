@@ -1,117 +1,80 @@
 package br.com.fiap.model.dao;
 
+import br.com.fiap.model.vo.Peca;
+import br.com.fiap.connection.ConnDAO;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import br.com.fiap.connection.ConnDAO;
-import br.com.fiap.model.vo.*;
-
 
 public class PecaDAO {
 
-    public void inserir(Peca peca) {
-        String sql = "INSERT INTO Peca (ID_Peca, Tipo_Peca, Nome_Peca, Descricao_Peca, Loja_Parceira_Endereco_Loja) VALUES (?, ?, ?, ?, ?)";
+    private Connection conexao;
 
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, peca.getIdPeca());
-            pstmt.setString(2, peca.getTipoPeca());
-            pstmt.setString(3, peca.getNomePeca());
-            pstmt.setString(4, peca.getDescricaoPeca());
-            pstmt.setString(5, peca.getLojaParceiraEndereco());
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public PecaDAO() throws ClassNotFoundException, SQLException {
+        this.conexao = new ConnDAO().conexao();
     }
 
-    public Peca buscarPorId(String idPeca) {
-        String sql = "SELECT * FROM Peca WHERE ID_Peca = ?";
-        Peca peca = null;
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, idPeca);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                peca = new Peca(
-                    rs.getString("ID_Peca"),
-                    rs.getString("Tipo_Peca"),
-                    rs.getString("Nome_Peca"),
-                    rs.getString("Descricao_Peca"),
-                    rs.getString("Loja_Parceira_Endereco_Loja")
-                );
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Inserir
+    public String PecaDAO_Inserir(Peca peca) throws SQLException {
+        String sql = "INSERT INTO PECA (ID_PECA, TIPO_PECA, NOME_PECA, DESCRICAO_PECA, LOJA_PARCEIRA_ENDERECO) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, peca.getIdPeca());
+            stmt.setString(2, peca.getTipoPeca());
+            stmt.setString(3, peca.getNomePeca());
+            stmt.setString(4, peca.getDescricaoPeca());
+            stmt.setString(5, peca.getLojaParceiraEndereco());
+            stmt.executeUpdate();
         }
-
-        return peca;
+        return "Peça cadastrada com sucesso!";
     }
 
-    public void atualizar(Peca peca) {
-        String sql = "UPDATE Peca SET Tipo_Peca = ?, Nome_Peca = ?, Descricao_Peca = ?, Loja_Parceira_Endereco_Loja = ? WHERE ID_Peca = ?";
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, peca.getTipoPeca());
-            pstmt.setString(2, peca.getNomePeca());
-            pstmt.setString(3, peca.getDescricaoPeca());
-            pstmt.setString(4, peca.getLojaParceiraEndereco());
-            pstmt.setString(5, peca.getIdPeca());
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Deletar
+    public String PecaDAO_Deletar(String idPeca) throws SQLException {
+        String sql = "DELETE FROM PECA WHERE ID_PECA = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, idPeca);
+            stmt.executeUpdate();
         }
+        return "Peça deletada com sucesso!";
     }
 
-    public void excluir(String idPeca) {
-        String sql = "DELETE FROM Peca WHERE ID_Peca = ?";
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, idPeca);
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Atualizar
+    public String PecaDAO_Atualizar(Peca peca) throws SQLException {
+        String sql = "UPDATE PECA SET TIPO_PECA = ?, NOME_PECA = ?, DESCRICAO_PECA = ?, LOJA_PARCEIRA_ENDERECO = ? WHERE ID_PECA = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, peca.getTipoPeca());
+            stmt.setString(2, peca.getNomePeca());
+            stmt.setString(3, peca.getDescricaoPeca());
+            stmt.setString(4, peca.getLojaParceiraEndereco());
+            stmt.setString(5, peca.getIdPeca());
+            stmt.executeUpdate();
         }
+        return "Peça atualizada com sucesso!";
     }
 
-    public List<Peca> listarTodas() {
-        String sql = "SELECT * FROM Peca";
-        List<Peca> pecas = new ArrayList<>();
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+    // Selecionar
+    public List<Peca> PecaDAO_Selecionar() throws SQLException {
+        List<Peca> listaPecas = new ArrayList<>();
+        String sql = "SELECT * FROM PECA";
+        
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
              
             while (rs.next()) {
                 Peca peca = new Peca(
-                    rs.getString("ID_Peca"),
-                    rs.getString("Tipo_Peca"),
-                    rs.getString("Nome_Peca"),
-                    rs.getString("Descricao_Peca"),
-                    rs.getString("Loja_Parceira_Endereco_Loja")
+                    rs.getString("ID_PECA"),
+                    rs.getString("TIPO_PECA"),
+                    rs.getString("NOME_PECA"),
+                    rs.getString("DESCRICAO_PECA"),
+                    rs.getString("LOJA_PARCEIRA_ENDERECO")
                 );
-                pecas.add(peca);
+                listaPecas.add(peca);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
-        return pecas;
+        return listaPecas;
     }
 }

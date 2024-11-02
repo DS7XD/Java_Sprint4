@@ -1,13 +1,13 @@
 package br.com.fiap.model.vo;
 
 public class Oficina {
-    private String enderecoOficina;         // Endereco_Oficina
-    private String cnpjOficina;             // Cnpj_Oficina
-    private String nomeOficina;              // Nome_Oficina
-    private Double avaliacaoOficina;        // Avaliacao_Oficina
-    private String especializacaoOficina;   // Especializacao_Oficina
-    private String chatbotId;                // Chatbot_ID_Chatbot
-    private String chatbotClienteCpf;        // Chatbot_Cliente_CPF_Cliente
+    private String enderecoOficina;
+    private String cnpjOficina;
+    private String nomeOficina;
+    private Double avaliacaoOficina;
+    private String especializacaoOficina;
+    private String chatbotId;
+    private String chatbotClienteCpf;
 
     public Oficina(String enderecoOficina, String cnpjOficina, String nomeOficina, Double avaliacaoOficina, String especializacaoOficina, String chatbotId, String chatbotClienteCpf) {
         this.enderecoOficina = enderecoOficina;

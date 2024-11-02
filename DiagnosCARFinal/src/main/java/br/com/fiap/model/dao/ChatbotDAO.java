@@ -1,9 +1,9 @@
 package br.com.fiap.model.dao;
 
+import br.com.fiap.model.vo.Chatbot;
 import br.com.fiap.connection.ConnDAO;
-import br.com.fiap.model.vo.*;
+
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,108 +12,69 @@ import java.util.List;
 
 public class ChatbotDAO {
 
-    public void inserir(Chatbot chatbot) {
-        String sql = "INSERT INTO Chatbot (ID_Chatbot, Horario_Chat, Plano, Cliente_CPF_Cliente, Placa_Automovel) VALUES (?, ?, ?, ?, ?)";
+    private Connection conexao;
 
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, chatbot.getIdChatbot());
-            pstmt.setDate(2, new Date(chatbot.getHorarioChat().getTime()));
-            pstmt.setString(3, chatbot.getPlano());
-            pstmt.setString(4, chatbot.getClienteCpfCliente());
-            pstmt.setString(5, chatbot.getPlacaAutomovel());
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public ChatbotDAO() throws ClassNotFoundException, SQLException {
+        this.conexao = new ConnDAO().conexao();
     }
 
-    public Chatbot buscarPorId(String idChatbot, String clienteCpfCliente) {
-        String sql = "SELECT * FROM Chatbot WHERE ID_Chatbot = ? AND Cliente_CPF_Cliente = ?";
-        Chatbot chatbot = null;
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, idChatbot);
-            pstmt.setString(2, clienteCpfCliente);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                chatbot = new Chatbot(
-                    rs.getString("ID_Chatbot"),
-                    rs.getDate("Horario_Chat"),
-                    rs.getString("Plano"),
-                    rs.getString("Cliente_CPF_Cliente"),
-                    rs.getString("Placa_Automovel")
-                );
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Inserir
+    public String ChatbotDAO_Inserir(Chatbot chatbot) throws SQLException {
+        String sql = "INSERT INTO CHATBOT (ID_CHATBOT, HORARIO_CHAT, PLANO, CPF_CLIENTE, PLACA_AUTOMOVEL) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, chatbot.getIdChatbot());
+            stmt.setTimestamp(2, new java.sql.Timestamp(chatbot.getHorarioChat().getTime()));
+            stmt.setString(3, chatbot.getPlano());
+            stmt.setString(4, chatbot.getClienteCpfCliente());
+            stmt.setString(5, chatbot.getPlacaAutomovel());
+            stmt.executeUpdate();
         }
-
-        return chatbot;
+        return "Chatbot cadastrado com sucesso!";
     }
 
-    public void atualizar(Chatbot chatbot) {
-        String sql = "UPDATE Chatbot SET Horario_Chat = ?, Plano = ?, Placa_Automovel = ? WHERE ID_Chatbot = ? AND Cliente_CPF_Cliente = ?";
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setDate(1, new Date(chatbot.getHorarioChat().getTime()));
-            pstmt.setString(2, chatbot.getPlano());
-            pstmt.setString(3, chatbot.getPlacaAutomovel());
-            pstmt.setString(4, chatbot.getIdChatbot());
-            pstmt.setString(5, chatbot.getClienteCpfCliente());
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Deletar
+    public String ChatbotDAO_Deletar(String idChatbot) throws SQLException {
+        String sql = "DELETE FROM CHATBOT WHERE ID_CHATBOT = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, idChatbot);
+            stmt.executeUpdate();
         }
+        return "Chatbot deletado com sucesso!";
     }
 
-    public void excluir(String idChatbot, String clienteCpfCliente) {
-        String sql = "DELETE FROM Chatbot WHERE ID_Chatbot = ? AND Cliente_CPF_Cliente = ?";
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, idChatbot);
-            pstmt.setString(2, clienteCpfCliente);
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Atualizar
+    public String ChatbotDAO_Atualizar(Chatbot chatbot) throws SQLException {
+        String sql = "UPDATE CHATBOT SET HORARIO_CHAT = ?, PLANO = ?, CPF_CLIENTE = ?, PLACA_AUTOMOVEL = ? WHERE ID_CHATBOT = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setTimestamp(1, new java.sql.Timestamp(chatbot.getHorarioChat().getTime()));
+            stmt.setString(2, chatbot.getPlano());
+            stmt.setString(3, chatbot.getClienteCpfCliente());
+            stmt.setString(4, chatbot.getPlacaAutomovel());
+            stmt.setString(5, chatbot.getIdChatbot());
+            stmt.executeUpdate();
         }
+        return "Chatbot atualizado com sucesso!";
     }
 
-    public List<Chatbot> listarTodos() {
-        String sql = "SELECT * FROM Chatbot";
-        List<Chatbot> chatbots = new ArrayList<>();
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+    // Selecionar
+    public List<Chatbot> ChatbotDAO_Selecionar() throws SQLException {
+        List<Chatbot> listaChatbot = new ArrayList<>();
+        String sql = "SELECT * FROM CHATBOT";
+        
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
              
             while (rs.next()) {
                 Chatbot chatbot = new Chatbot(
-                    rs.getString("ID_Chatbot"),
-                    rs.getDate("Horario_Chat"),
-                    rs.getString("Plano"),
-                    rs.getString("Cliente_CPF_Cliente"),
-                    rs.getString("Placa_Automovel")
+                    rs.getString("ID_CHATBOT"),
+                    rs.getTimestamp("HORARIO_CHAT"),
+                    rs.getString("PLANO"),
+                    rs.getString("CPF_CLIENTE"),
+                    rs.getString("PLACA_AUTOMOVEL")
                 );
-                chatbots.add(chatbot);
+                listaChatbot.add(chatbot);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
-        return chatbots;
+        return listaChatbot;
     }
 }

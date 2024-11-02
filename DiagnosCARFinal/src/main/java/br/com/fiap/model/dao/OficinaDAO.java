@@ -1,7 +1,7 @@
 package br.com.fiap.model.dao;
 
+import br.com.fiap.model.vo.Oficina;
 import br.com.fiap.connection.ConnDAO;
-import br.com.fiap.model.vo.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,114 +12,75 @@ import java.util.List;
 
 public class OficinaDAO {
 
-    public void inserir(Oficina oficina) {
-        String sql = "INSERT INTO Oficina (Endereco_Oficina, Cnpj_Oficina, Nome_Oficina, Avaliacao_Oficina, Especializacao_Oficina, Chatbot_ID_Chatbot, Chatbot_Cliente_CPF_Cliente) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private Connection conexao;
 
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, oficina.getEnderecoOficina());
-            pstmt.setString(2, oficina.getCnpjOficina());
-            pstmt.setString(3, oficina.getNomeOficina());
-            pstmt.setDouble(4, oficina.getAvaliacaoOficina());
-            pstmt.setString(5, oficina.getEspecializacaoOficina());
-            pstmt.setString(6, oficina.getChatbotId());
-            pstmt.setString(7, oficina.getChatbotClienteCpf());
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public OficinaDAO() throws ClassNotFoundException, SQLException {
+        this.conexao = new ConnDAO().conexao();
     }
 
-    public Oficina buscarPorEndereco(String enderecoOficina) {
-        String sql = "SELECT * FROM Oficina WHERE Endereco_Oficina = ?";
-        Oficina oficina = null;
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, enderecoOficina);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                oficina = new Oficina(
-                    rs.getString("Endereco_Oficina"),
-                    rs.getString("Cnpj_Oficina"),
-                    rs.getString("Nome_Oficina"),
-                    rs.getDouble("Avaliacao_Oficina"),
-                    rs.getString("Especializacao_Oficina"),
-                    rs.getString("Chatbot_ID_Chatbot"),
-                    rs.getString("Chatbot_Cliente_CPF_Cliente")
-                );
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Inserir
+    public String OficinaDAO_Inserir(Oficina oficina) throws SQLException {
+        String sql = "INSERT INTO OFICINA (ENDERECO_OFICINA, CNPJ_OFICINA, NOME_OFICINA, AVALIACAO_OFICINA, ESPECIALIZACAO_OFICINA, CHATBOT_ID, CHATBOT_CLIENTE_CPF) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, oficina.getEnderecoOficina());
+            stmt.setString(2, oficina.getCnpjOficina());
+            stmt.setString(3, oficina.getNomeOficina());
+            stmt.setDouble(4, oficina.getAvaliacaoOficina());
+            stmt.setString(5, oficina.getEspecializacaoOficina());
+            stmt.setString(6, oficina.getChatbotId());
+            stmt.setString(7, oficina.getChatbotClienteCpf());
+            stmt.executeUpdate();
         }
-
-        return oficina;
+        return "Oficina cadastrada com sucesso!";
     }
 
-    public void atualizar(Oficina oficina) {
-        String sql = "UPDATE Oficina SET Cnpj_Oficina = ?, Nome_Oficina = ?, Avaliacao_Oficina = ?, Especializacao_Oficina = ?, Chatbot_ID_Chatbot = ?, Chatbot_Cliente_CPF_Cliente = ? WHERE Endereco_Oficina = ?";
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, oficina.getCnpjOficina());
-            pstmt.setString(2, oficina.getNomeOficina());
-            pstmt.setDouble(3, oficina.getAvaliacaoOficina());
-            pstmt.setString(4, oficina.getEspecializacaoOficina());
-            pstmt.setString(5, oficina.getChatbotId());
-            pstmt.setString(6, oficina.getChatbotClienteCpf());
-            pstmt.setString(7, oficina.getEnderecoOficina());
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Deletar
+    public String OficinaDAO_deletar(String cnpjOficina) throws SQLException {
+        String sql = "DELETE FROM OFICINA WHERE CNPJ_OFICINA = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, cnpjOficina);
+            stmt.executeUpdate();
         }
+        return "Oficina deletada com sucesso!";
     }
 
-    public void excluir(String enderecoOficina) {
-        String sql = "DELETE FROM Oficina WHERE Endereco_Oficina = ?";
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-             
-            pstmt.setString(1, enderecoOficina);
-            pstmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+    // Atualizar
+    public String OficinaDAO_Atualizar(Oficina oficina) throws SQLException {
+        String sql = "UPDATE OFICINA SET ENDERECO_OFICINA = ?, NOME_OFICINA = ?, AVALIACAO_OFICINA = ?, ESPECIALIZACAO_OFICINA = ?, CHATBOT_ID = ?, CHATBOT_CLIENTE_CPF = ? WHERE CNPJ_OFICINA = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setString(1, oficina.getEnderecoOficina());
+            stmt.setString(2, oficina.getNomeOficina());
+            stmt.setDouble(3, oficina.getAvaliacaoOficina());
+            stmt.setString(4, oficina.getEspecializacaoOficina());
+            stmt.setString(5, oficina.getChatbotId());
+            stmt.setString(6, oficina.getChatbotClienteCpf());
+            stmt.setString(7, oficina.getCnpjOficina());
+            stmt.executeUpdate();
         }
+        return "Oficina atualizada com sucesso!";
     }
 
-    public List<Oficina> listarTodas() {
-        String sql = "SELECT * FROM Oficina";
-        List<Oficina> oficinas = new ArrayList<>();
-
-        try (Connection conn = ConnDAO.conectar();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+    // Selecionar
+    public List<Oficina> OficinaDAO_Selecionar() throws SQLException {
+        List<Oficina> listaOficinas = new ArrayList<>();
+        String sql = "SELECT * FROM OFICINA";
+        
+        try (PreparedStatement stmt = conexao.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
              
             while (rs.next()) {
                 Oficina oficina = new Oficina(
-                    rs.getString("Endereco_Oficina"),
-                    rs.getString("Cnpj_Oficina"),
-                    rs.getString("Nome_Oficina"),
-                    rs.getDouble("Avaliacao_Oficina"),
-                    rs.getString("Especializacao_Oficina"),
-                    rs.getString("Chatbot_ID_Chatbot"),
-                    rs.getString("Chatbot_Cliente_CPF_Cliente")
+                    rs.getString("ENDERECO_OFICINA"),
+                    rs.getString("CNPJ_OFICINA"),
+                    rs.getString("NOME_OFICINA"),
+                    rs.getDouble("AVALIACAO_OFICINA"),
+                    rs.getString("ESPECIALIZACAO_OFICINA"),
+                    rs.getString("CHATBOT_ID"),
+                    rs.getString("CHATBOT_CLIENTE_CPF")
                 );
-                oficinas.add(oficina);
+                listaOficinas.add(oficina);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-
-        return oficinas;
+        return listaOficinas;
     }
 }
