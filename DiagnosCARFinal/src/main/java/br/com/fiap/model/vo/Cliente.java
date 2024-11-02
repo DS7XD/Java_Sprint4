@@ -13,7 +13,10 @@ public class Cliente {
     private String senhaCliente;
     private String telefoneCliente;
     private String enderecoCliente;
-
+    
+    public Cliente() {
+    }
+    
     public Cliente(String cpfCliente, String cnhCliente, String rgCliente, String nomeCliente, String sobrenomeCliente, Date dataNascCliente, String emailCliente, String senhaCliente, String telefoneCliente, String enderecoCliente) {
         this.cpfCliente = cpfCliente;
         this.cnhCliente = cnhCliente;
