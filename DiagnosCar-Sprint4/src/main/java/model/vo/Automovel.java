@@ -3,16 +3,14 @@ package model.vo;
 public class Automovel {
     private String placaAutomovel;    
     private String marcaAutomovel;    
-    private String modeloAutomovel;    
-    private String corAutomovel;       
+    private String modeloAutomovel;       
     private int anoAutomovel;          
     private String clienteCpfCliente;  
 
-    public Automovel(String placaAutomovel, String marcaAutomovel, String modeloAutomovel, String corAutomovel, int anoAutomovel, String clienteCpfCliente) {
+    public Automovel(String placaAutomovel, String marcaAutomovel, String modeloAutomovel, int anoAutomovel, String clienteCpfCliente) {
         this.placaAutomovel = placaAutomovel;
         this.marcaAutomovel = marcaAutomovel;
         this.modeloAutomovel = modeloAutomovel;
-        this.corAutomovel = corAutomovel;
         this.anoAutomovel = anoAutomovel;
         this.clienteCpfCliente = clienteCpfCliente;
     }
@@ -39,14 +37,6 @@ public class Automovel {
 
     public void setModeloAutomovel(String modeloAutomovel) {
         this.modeloAutomovel = modeloAutomovel;
-    }
-
-    public String getCorAutomovel() {
-        return corAutomovel;
-    }
-
-    public void setCorAutomovel(String corAutomovel) {
-        this.corAutomovel = corAutomovel;
     }
 
     public int getAnoAutomovel() {
