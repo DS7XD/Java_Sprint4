@@ -1,27 +1,29 @@
-// AutomovelResource.java
+// PecaResource.java
 package br.com.fiap.resources;
 
-import br.com.fiap.model.bo.AutomovelBO;
-import br.com.fiap.model.vo.Automovel;
+import br.com.fiap.model.bo.PecaBO;
+import br.com.fiap.model.vo.Peca;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.sql.SQLException;
 import java.util.List;
 
-@Path("/automovel")
-public class AutomovelResource {
+@Path("/peca")
+public class PecaResource {
     
-    private AutomovelBO automovelBO = new AutomovelBO();
+    private PecaBO pecaBO = new PecaBO();
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cadastrar(Automovel automovel, @Context UriInfo uriInfo) {
+    public Response cadastrar(Peca peca, @Context UriInfo uriInfo) {
         try {
-            String resultado = automovelBO.cadastrarAutomovel(automovel);
-            UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-            builder.path(automovel.getPlacaAutomovel());
+            String resultado = pecaBO.cadastrarPeca(peca);
+            UriBuilder builder = uriInfo.get BaseUriBuilder();
+            builder.path(PecaResource.class)
+                   .path(PecaResource.class, "cadastrar")
+                   .build(peca.getIdPeca());
             return Response.created(builder.build())
                           .entity(resultado)
                           .build();
@@ -31,19 +33,19 @@ public class AutomovelResource {
                           .build();
         } catch (SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Erro ao cadastrar automóvel: " + e.getMessage())
+                          .entity("Erro ao cadastrar peça: " + e.getMessage())
                           .build();
         }
     }
 
     @PUT
-    @Path("/{placa}")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response atualizar(Automovel automovel, @PathParam("placa") String placa) {
+    public Response atualizar(Peca peca, @PathParam("id") String id) {
         try {
-            automovel.setPlacaAutomovel(placa);
-            String resultado = automovelBO.atualizarAutomovel(automovel);
+            peca.setIdPeca(id);
+            String resultado = pecaBO.atualizarPeca(peca);
             return Response.ok().entity(resultado).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -53,11 +55,11 @@ public class AutomovelResource {
     }
 
     @DELETE
-    @Path("/{placa}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletar(@PathParam("placa") String placa) {
+    public Response deletar(@PathParam("id") String id) {
         try {
-            String resultado = automovelBO.deletarAutomovel(placa);
+            String resultado = pecaBO.deletarPeca(id);
             return Response.ok().entity(resultado).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -70,8 +72,8 @@ public class AutomovelResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listar() {
         try {
-            List<Automovel> automoveis = automovelBO.listarAutomoveis();
-            return Response.ok(automoveis).build();
+            List<Peca> pecas = pecaBO.listarPecas();
+            return Response.ok(pecas).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                           .entity(e.getMessage())

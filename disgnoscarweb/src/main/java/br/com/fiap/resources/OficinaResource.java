@@ -1,27 +1,26 @@
-// AutomovelResource.java
 package br.com.fiap.resources;
 
-import br.com.fiap.model.bo.AutomovelBO;
-import br.com.fiap.model.vo.Automovel;
+import br.com.fiap.model.bo.OficinaBO;
+import br.com.fiap.model.vo.Oficina;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.sql.SQLException;
 import java.util.List;
 
-@Path("/automovel")
-public class AutomovelResource {
+@Path("/oficina")
+public class OficinaResource {
     
-    private AutomovelBO automovelBO = new AutomovelBO();
+    private OficinaBO oficinaBO = new OficinaBO();
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cadastrar(Automovel automovel, @Context UriInfo uriInfo) {
+    public Response cadastrar(Oficina oficina, @Context UriInfo uriInfo) {
         try {
-            String resultado = automovelBO.cadastrarAutomovel(automovel);
+            String resultado = oficinaBO.cadastrarOficina(oficina);
             UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-            builder.path(automovel.getPlacaAutomovel());
+            builder.path(oficina.getEnderecoOficina());
             return Response.created(builder.build())
                           .entity(resultado)
                           .build();
@@ -31,19 +30,19 @@ public class AutomovelResource {
                           .build();
         } catch (SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Erro ao cadastrar automóvel: " + e.getMessage())
+                          .entity("Erro ao cadastrar oficina: " + e.getMessage())
                           .build();
         }
     }
 
     @PUT
-    @Path("/{placa}")
+    @Path("/{endereco}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response atualizar(Automovel automovel, @PathParam("placa") String placa) {
+    public Response atualizar(Oficina oficina, @PathParam("endereco") String endereco) {
         try {
-            automovel.setPlacaAutomovel(placa);
-            String resultado = automovelBO.atualizarAutomovel(automovel);
+            oficina.setEnderecoOficina(endereco);
+            String resultado = oficinaBO.atualizarOficina(oficina);
             return Response.ok().entity(resultado).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -53,11 +52,11 @@ public class AutomovelResource {
     }
 
     @DELETE
-    @Path("/{placa}")
+    @Path("/{endereco}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletar(@PathParam("placa") String placa) {
+    public Response deletar(@PathParam("endereco") String endereco) {
         try {
-            String resultado = automovelBO.deletarAutomovel(placa);
+            String resultado = oficinaBO.deletarOficina(endereco);
             return Response.ok().entity(resultado).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -70,8 +69,8 @@ public class AutomovelResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listar() {
         try {
-            List<Automovel> automoveis = automovelBO.listarAutomoveis();
-            return Response.ok(automoveis).build();
+            List<Oficina> oficinas = oficinaBO.listarOficinas();
+            return Response.ok(oficinas).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                           .entity(e.getMessage())

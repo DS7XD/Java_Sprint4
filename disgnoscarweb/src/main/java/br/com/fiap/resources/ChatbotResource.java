@@ -1,27 +1,27 @@
-// AutomovelResource.java
+// ChatbotResource.java
 package br.com.fiap.resources;
 
-import br.com.fiap.model.bo.AutomovelBO;
-import br.com.fiap.model.vo.Automovel;
+import br.com.fiap.model.bo.ChatbotBO;
+import br.com.fiap.model.vo.Chatbot;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 import java.sql.SQLException;
 import java.util.List;
 
-@Path("/automovel")
-public class AutomovelResource {
+@Path("/chatbot")
+public class ChatbotResource {
     
-    private AutomovelBO automovelBO = new AutomovelBO();
+    private ChatbotBO chatbotBO = new ChatbotBO();
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cadastrar(Automovel automovel, @Context UriInfo uriInfo) {
+    public Response cadastrar(Chatbot chatbot, @Context UriInfo uriInfo) {
         try {
-            String resultado = automovelBO.cadastrarAutomovel(automovel);
+            String resultado = chatbotBO.cadastrarChatbot(chatbot);
             UriBuilder builder = uriInfo.getAbsolutePathBuilder();
-            builder.path(automovel.getPlacaAutomovel());
+            builder.path(chatbot.getIdChatbot());
             return Response.created(builder.build())
                           .entity(resultado)
                           .build();
@@ -31,19 +31,19 @@ public class AutomovelResource {
                           .build();
         } catch (SQLException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("Erro ao cadastrar automóvel: " + e.getMessage())
+                          .entity("Erro ao cadastrar chatbot: " + e.getMessage())
                           .build();
         }
     }
 
     @PUT
-    @Path("/{placa}")
+    @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response atualizar(Automovel automovel, @PathParam("placa") String placa) {
+    public Response atualizar(Chatbot chatbot, @PathParam("id") String id ) {
         try {
-            automovel.setPlacaAutomovel(placa);
-            String resultado = automovelBO.atualizarAutomovel(automovel);
+            chatbot.setIdChatbot(id);
+            String resultado = chatbotBO.atualizarChatbot(chatbot);
             return Response.ok().entity(resultado).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -53,11 +53,11 @@ public class AutomovelResource {
     }
 
     @DELETE
-    @Path("/{placa}")
+    @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deletar(@PathParam("placa") String placa) {
+    public Response deletar(@PathParam("id") String id) {
         try {
-            String resultado = automovelBO.deletarAutomovel(placa);
+            String resultado = chatbotBO.deletarChatbot(id);
             return Response.ok().entity(resultado).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -70,8 +70,8 @@ public class AutomovelResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listar() {
         try {
-            List<Automovel> automoveis = automovelBO.listarAutomoveis();
-            return Response.ok(automoveis).build();
+            List<Chatbot> chatbots = chatbotBO.listarChatbots();
+            return Response.ok(chatbots).build();
         } catch (Exception e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                           .entity(e.getMessage())
