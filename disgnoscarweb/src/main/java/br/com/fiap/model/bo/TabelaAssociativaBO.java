@@ -1,6 +1,7 @@
 package br.com.fiap.model.bo;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import br.com.fiap.model.dao.TabelaAssociativaDAO;
 import br.com.fiap.model.vo.TabelaAssociativaVO;
@@ -23,6 +24,11 @@ public class TabelaAssociativaBO {
 
     public void deletarTabelaAssociativa(String cpfCliente, String idChatbot) throws SQLException {
         this.tabelaAssociativaDAO.TabelaAssociativa_Deletar(cpfCliente, idChatbot);
+    }
+
+    public List<TabelaAssociativaVO> listarTabelaAssociativa() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarTabelaAssociativa'");
     }
 }
 
