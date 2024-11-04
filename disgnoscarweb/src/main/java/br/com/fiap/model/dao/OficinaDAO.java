@@ -1,6 +1,6 @@
 package br.com.fiap.model.dao;
 
-import br.com.fiap.model.vo.Oficina;
+import br.com.fiap.model.vo.OficinaVO;
 import br.com.fiap.connection.ConnDAO;
 
 import java.sql.Connection;
@@ -30,7 +30,7 @@ public class OficinaDAO {
     }
 
     // Inserir
-    public String OficinaDAO_Inserir(Oficina oficina) throws SQLException {
+    public String OficinaDAO_Inserir(OficinaVO oficina) throws SQLException {
         String sql = "INSERT INTO OFICINA (ENDERECO_OFICINA, CNPJ_OFICINA, NOME_OFICINA, AVALIACAO_OFICINA, ESPECIALIZACAO_OFICINA, CHATBOT_ID, CHATBOT_CLIENTE_CPF) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, oficina.getEnderecoOficina());
@@ -60,7 +60,7 @@ public class OficinaDAO {
     }
 
     // Atualizar
-    public String OficinaDAO_Atualizar(Oficina oficina) throws SQLException {
+    public String OficinaDAO_Atualizar(OficinaVO oficina) throws SQLException {
         String sql = "UPDATE OFICINA SET ENDERECO_OFICINA = ?, NOME_OFICINA = ?, AVALIACAO_OFICINA = ?, ESPECIALIZACAO_OFICINA = ?, CHATBOT_ID = ?, CHATBOT_CLIENTE_CPF = ? WHERE CNPJ_OFICINA = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, oficina.getEnderecoOficina());
@@ -78,15 +78,15 @@ public class OficinaDAO {
     }
 
     // Selecionar
-    public List<Oficina> OficinaDAO_Selecionar() throws SQLException {
-        List<Oficina> listaOficinas = new ArrayList<>();
+    public List<OficinaVO> OficinaDAO_Selecionar() throws SQLException {
+        List<OficinaVO> listaOficinas = new ArrayList<>();
         String sql = "SELECT * FROM OFICINA";
         
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
              
             while (rs.next()) {
-                Oficina oficina = new Oficina(
+                OficinaVO oficina = new OficinaVO(
                     rs.getString("ENDERECO_OFICINA"),
                     rs.getString("CNPJ_OFICINA"),
                     rs.getString("NOME_OFICINA"),

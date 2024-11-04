@@ -1,14 +1,14 @@
 package br.com.fiap.model.bo;
 
 import br.com.fiap.model.dao.PecaDAO;
-import br.com.fiap.model.vo.Peca;
+import br.com.fiap.model.vo.PecaVO;
 import java.sql.SQLException;
 import java.util.List;
 
 public class PecaBO {
-    private PecaDAO pecaDAO = new PecaDAO();
+    private PecaDAO pecaDAO;
 
-    public String cadastrarPeca(Peca peca) throws SQLException {
+    public String cadastrarPeca(PecaVO peca) throws SQLException {
         if (peca.getIdPeca() == null || peca.getIdPeca().trim().isEmpty()) {
             throw new IllegalArgumentException("ID da peça não pode estar vazio");
         }
@@ -20,7 +20,7 @@ public class PecaBO {
         return pecaDAO.PecaDAO_Inserir(peca);
     }
 
-    public String atualizarPeca(Peca peca) throws SQLException {
+    public String atualizarPeca(PecaVO peca) throws SQLException {
         if (peca.getIdPeca() == null || peca.getIdPeca().trim().isEmpty()) {
             throw new IllegalArgumentException("ID da peça não pode estar vazio");
         }
@@ -34,7 +34,7 @@ public class PecaBO {
         return pecaDAO.PecaDAO_Deletar(id);
     }
 
-    public List<Peca> listarPecas() throws SQLException {
+    public List<PecaVO> listarPecas() throws SQLException {
         return pecaDAO.PecaDAO_Selecionar();
     }
 }

@@ -1,6 +1,6 @@
 package br.com.fiap.model.dao;
 
-import br.com.fiap.model.vo.Loja_Parceira;
+import br.com.fiap.model.vo.Loja_ParceiraVO;
 import br.com.fiap.connection.ConnDAO;
 
 import java.sql.Connection;
@@ -30,7 +30,7 @@ public class LojaParceiraDAO {
     }
 
     // Inserir
-    public String LojaParceiraDAO_Inserir(Loja_Parceira loja) throws SQLException {
+    public String LojaParceiraDAO_Inserir(Loja_ParceiraVO loja) throws SQLException {
         String sql = "INSERT INTO LOJA_PARCHEIRA (ENDERECO_LOJA, CNPJ_LOJA, NOME_LOJA, AVALIACAO_LOJA, ESPECIALIZACAO_LOJA) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, loja.getEnderecoLoja());
@@ -58,7 +58,7 @@ public class LojaParceiraDAO {
     }
 
     // Atualizar
-    public String LojaParceiraDAO_Atualizar(Loja_Parceira loja) throws SQLException {
+    public String LojaParceiraDAO_Atualizar(Loja_ParceiraVO loja) throws SQLException {
         String sql = "UPDATE LOJA_PARCHEIRA SET ENDERECO_LOJA = ?, NOME_LOJA = ?, AVALIACAO_LOJA = ?, ESPECIALIZACAO_LOJA = ? WHERE CNPJ_LOJA = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, loja.getEnderecoLoja());
@@ -74,15 +74,15 @@ public class LojaParceiraDAO {
     }
 
     // Selecionar
-    public List<Loja_Parceira> LojaParceiraDAO_Selecionar() throws SQLException {
-        List<Loja_Parceira> listaLojas = new ArrayList<>();
+    public List<Loja_ParceiraVO> LojaParceiraDAO_Selecionar() throws SQLException {
+        List<Loja_ParceiraVO> listaLojas = new ArrayList<>();
         String sql = "SELECT * FROM LOJA_PARCHEIRA";
         
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
              
             while (rs.next()) {
-                Loja_Parceira loja = new Loja_Parceira(
+                Loja_ParceiraVO loja = new Loja_ParceiraVO(
                     rs.getString("ENDERECO_LOJA"),
                     rs.getString("CNPJ_LOJA"),
                     rs.getString("NOME_LOJA"),

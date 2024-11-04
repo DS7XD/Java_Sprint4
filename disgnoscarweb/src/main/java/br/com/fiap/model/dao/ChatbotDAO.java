@@ -1,6 +1,6 @@
 package br.com.fiap.model.dao;
 
-import br.com.fiap.model.vo.Chatbot;
+import br.com.fiap.model.vo.ChatbotVO;
 import br.com.fiap.connection.ConnDAO;
 
 import java.sql.Connection;
@@ -30,7 +30,7 @@ public class ChatbotDAO {
     }
 
     // Inserir
-    public String ChatbotDAO_Inserir(Chatbot chatbot) throws SQLException {
+    public String ChatbotDAO_Inserir(ChatbotVO chatbot) throws SQLException {
         String sql = "INSERT INTO CHATBOT (ID_CHATBOT, HORARIO_CHAT, PLANO, CPF_CLIENTE, PLACA_AUTOMOVEL) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, chatbot.getIdChatbot());
@@ -58,7 +58,7 @@ public class ChatbotDAO {
     }
 
     // Atualizar
-    public String ChatbotDAO_Atualizar(Chatbot chatbot) throws SQLException {
+    public String ChatbotDAO_Atualizar(ChatbotVO chatbot) throws SQLException {
         String sql = "UPDATE CHATBOT SET HORARIO_CHAT = ?, PLANO = ?, CPF_CLIENTE = ?, PLACA_AUTOMOVEL = ? WHERE ID_CHATBOT = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setTimestamp(1, new java.sql.Timestamp(chatbot.getHorarioChat().getTime()));
@@ -74,15 +74,15 @@ public class ChatbotDAO {
     }
 
     // Selecionar
-    public List<Chatbot> ChatbotDAO_Selecionar() throws SQLException {
-        List<Chatbot> listaChatbot = new ArrayList<>();
+    public List<ChatbotVO> ChatbotDAO_Selecionar() throws SQLException {
+        List<ChatbotVO> listaChatbot = new ArrayList<>();
         String sql = "SELECT * FROM CHATBOT";
         
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
              
             while (rs.next()) {
-                Chatbot chatbot = new Chatbot(
+                ChatbotVO chatbot = new ChatbotVO(
                     rs.getString("ID_CHATBOT"),
                     rs.getTimestamp("HORARIO_CHAT"),
                     rs.getString("PLANO"),

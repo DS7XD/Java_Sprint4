@@ -1,6 +1,6 @@
 package br.com.fiap.model.dao;
 
-import br.com.fiap.model.vo.PreDiagnostico;
+import br.com.fiap.model.vo.PreDiagnosticoVO;
 import br.com.fiap.connection.ConnDAO;
 
 import java.sql.Connection;
@@ -30,7 +30,7 @@ public class PreDiagnosticoDAO {
     }
 
     // Inserir
-    public String PreDiagnosticoDAO_Inserir(PreDiagnostico preDiagnostico) throws SQLException {
+    public String PreDiagnosticoDAO_Inserir(PreDiagnosticoVO preDiagnostico) throws SQLException {
         String sql = "INSERT INTO PRE_DIAGNOSTICO (ID_PRE_DIAGNOSTICO, NIVEL_DIAGNOSTICO, DIAGNOSTICO, ASSISTENTE_ID_CHATBOT, CLIENTE_CPF_CLIENTE, PLACA_AUTOMOVEL) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, preDiagnostico.getIdPreDiagnostico());
@@ -59,7 +59,7 @@ public class PreDiagnosticoDAO {
     }
 
     // Atualizar
-    public String PreDiagnosticoDAO_Atualizar(PreDiagnostico preDiagnostico) throws SQLException {
+    public String PreDiagnosticoDAO_Atualizar(PreDiagnosticoVO preDiagnostico) throws SQLException {
         String sql = "UPDATE PRE_DIAGNOSTICO SET NIVEL_DIAGNOSTICO = ?, DIAGNOSTICO = ?, ASSISTENTE_ID_CHATBOT = ?, CLIENTE_CPF_CLIENTE = ?, PLACA_AUTOMOVEL = ? WHERE ID_PRE_DIAGNOSTICO = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, preDiagnostico.getNivelDiagnostico());
@@ -76,15 +76,15 @@ public class PreDiagnosticoDAO {
     }
 
     // Selecionar
-    public List<PreDiagnostico> PreDiagnosticoDAO_Selecionar() throws SQLException {
-        List<PreDiagnostico> listaPreDiagnosticos = new ArrayList<>();
+    public List<PreDiagnosticoVO> PreDiagnosticoDAO_Selecionar() throws SQLException {
+        List<PreDiagnosticoVO> listaPreDiagnosticos = new ArrayList<>();
         String sql = "SELECT * FROM PRE_DIAGNOSTICO";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
              
             while (rs.next()) {
-                PreDiagnostico preDiagnostico = new PreDiagnostico(
+                PreDiagnosticoVO preDiagnostico = new PreDiagnosticoVO(
                     rs.getString("ID_PRE_DIAGNOSTICO"),
                     rs.getInt("NIVEL_DIAGNOSTICO"),
                     rs.getString("DIAGNOSTICO"),

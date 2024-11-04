@@ -1,6 +1,6 @@
 package br.com.fiap.model.vo;
 
-public class PreDiagnostico {
+public class PreDiagnosticoVO {
     private String idPreDiagnostico;
     private int nivelDiagnostico;
     private String diagnostico;
@@ -8,7 +8,7 @@ public class PreDiagnostico {
     private String clienteCpfCliente;
     private String placaAutomovel;
 
-    public PreDiagnostico(String idPreDiagnostico, int nivelDiagnostico, String diagnostico,
+    public PreDiagnosticoVO(String idPreDiagnostico, int nivelDiagnostico, String diagnostico,
                             String assistenteIdChatbot, String clienteCpfCliente, String placaAutomovel) {
         this.idPreDiagnostico = idPreDiagnostico;
         this.nivelDiagnostico = nivelDiagnostico;

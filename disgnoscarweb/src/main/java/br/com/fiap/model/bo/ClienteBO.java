@@ -3,7 +3,7 @@ package br.com.fiap.model.bo;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import br.com.fiap.model.vo.Cliente;
+import br.com.fiap.model.vo.ClienteVO;
 import br.com.fiap.model.dao.ClienteDAO;
 
 public class ClienteBO {
@@ -13,11 +13,11 @@ public class ClienteBO {
         this.clienteDAO = new ClienteDAO();
     }
 
-    public void cadastrarCliente(Cliente cliente) throws ClassNotFoundException, SQLException {
+    public void cadastrarCliente(ClienteVO cliente) throws ClassNotFoundException, SQLException {
         clienteDAO.ClienteDAO_Inserir(cliente);
     }
 
-    public void atualizarCliente(Cliente cliente) throws ClassNotFoundException, SQLException {
+    public void atualizarCliente(ClienteVO cliente) throws ClassNotFoundException, SQLException {
         clienteDAO.ClienteDAO_Atualizar(cliente);
     }
 
@@ -25,8 +25,8 @@ public class ClienteBO {
         clienteDAO.ClienteDAO_Deletar(cpfCliente);
     }
 
-    public ArrayList<Cliente> listarClientes() throws ClassNotFoundException, SQLException {
-        return (ArrayList<Cliente>) clienteDAO.ClienteDAO_Selecionar();
+    public ArrayList<ClienteVO> listarClientes() throws ClassNotFoundException, SQLException {
+        return (ArrayList<ClienteVO>) clienteDAO.ClienteDAO_Selecionar();
     }
     
     public boolean clienteExists(String cpfCliente) throws SQLException {

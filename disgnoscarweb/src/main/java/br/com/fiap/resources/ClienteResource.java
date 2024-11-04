@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 
-import br.com.fiap.model.vo.Cliente;
+import br.com.fiap.model.vo.ClienteVO;
 import br.com.fiap.model.bo.ClienteBO;
 
 @Path("/cliente")
@@ -36,7 +36,7 @@ public class ClienteResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response cadastroRs(Cliente cliente, @Context UriInfo uriInfo) throws ClassNotFoundException, SQLException {
+    public Response cadastroRs(ClienteVO cliente, @Context UriInfo uriInfo) throws ClassNotFoundException, SQLException {
         if (cliente.getCpfCliente() == null || cliente.getNomeCliente() == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("CPF e Nome são obrigatórios.").build();
         }
@@ -50,7 +50,7 @@ public class ClienteResource {
     @PUT
     @Path("/{cpfCliente}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response atualizaRs(Cliente cliente, @PathParam("cpfCliente") String cpfCliente) throws ClassNotFoundException, SQLException {
+    public Response atualizaRs(ClienteVO cliente, @PathParam("cpfCliente") String cpfCliente) throws ClassNotFoundException, SQLException {
         if (cliente.getNomeCliente() == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity("Nome é obrigatório para atualização.").build();
         }
@@ -87,7 +87,7 @@ public class ClienteResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public ArrayList<Cliente> selecionarRs() throws ClassNotFoundException, SQLException {
-        return (ArrayList<Cliente>) clienteBO.listarClientes();
+    public ArrayList<ClienteVO> selecionarRs() throws ClassNotFoundException, SQLException {
+        return (ArrayList<ClienteVO>) clienteBO.listarClientes();
     }
 }

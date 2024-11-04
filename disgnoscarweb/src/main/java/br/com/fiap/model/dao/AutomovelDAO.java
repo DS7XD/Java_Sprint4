@@ -1,6 +1,6 @@
 package br.com.fiap.model.dao;
 
-import br.com.fiap.model.vo.Automovel;
+import br.com.fiap.model.vo.AutomovelVO;
 import br.com.fiap.connection.ConnDAO;
 
 import java.sql.Connection;
@@ -18,8 +18,8 @@ public class AutomovelDAO {
         this.conexao = new ConnDAO().conexao();
     }
 
-    public String AutomovelDAO_Inserir(Automovel automovel) throws SQLException {
-        String sql = "INSERT INTO Automovel (PLACA_AUTOMOVEL, MARCA_AUTOMOVEL, MODELO_AUTOMOVEL, ANO_AUTOMOVEL, CPF_CLIENTE) VALUES (?, ?, ?, ?, ?)";
+    public String AutomovelDAO_Inserir(AutomovelVO automovel) throws SQLException {
+        String sql = "INSERT INTO Automovel (PLACA_AUTOMOVEL, MARCA_AUTOMOVEL, MODELO_AUTOMOVEL, ANO_AUTOMOVEL, Cliente_CPF_Cliente) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, automovel.getPlacaAutomovel());
             stmt.setString(2, automovel.getMarcaAutomovel());
@@ -40,32 +40,36 @@ public class AutomovelDAO {
         return "Automóvel deletado com sucesso!";
     }
 
-    public String AutomovelDAO_Atualizar(Automovel automovel) throws SQLException {
-        String sql = "UPDATE Automovel SET MARCA_AUTOMOVEL = ?, MODELO_AUTOMOVEL = ?, ANO_AUTOMOVEL = ?, CPF_CLIENTE = ? WHERE PLACA_AUTOMOVEL = ?";
+    public String AutomovelDAO_Atualizar(AutomovelVO automovel) throws SQLException {
+        String sql = "UPDATE Automovel SET MARCA_AUTOMOVEL = ?, MODELO_AUTOMOVEL = ?, ANO_AUTOMOVEL = ?, Cliente_CPF_Cliente = ? WHERE PLACA_AUTOMOVEL = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, automovel.getMarcaAutomovel());
             stmt.setString(2, automovel.getModeloAutomovel());
             stmt.setInt(3, automovel.getAnoAutomovel());
             stmt.setString(4, automovel.getClienteCpfCliente());
             stmt.setString(5, automovel.getPlacaAutomovel());
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new SQLException("Nenhum registro foi atualizado, verifique a placa fornecida.");
+            }
         }
         return "Automóvel atualizado com sucesso!";
     }
 
-    public List<Automovel> AutomovelDAO_Selecionar() throws SQLException {
-        List<Automovel> listaAutomovel = new ArrayList<>();
+
+    public List<AutomovelVO> AutomovelDAO_Selecionar() throws SQLException {
+        List<AutomovelVO> listaAutomovel = new ArrayList<>();
         String sql = "SELECT * FROM Automovel";
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Automovel automovel = new Automovel(
+                AutomovelVO automovel = new AutomovelVO(
                     rs.getString("PLACA_AUTOMOVEL"),
                     rs.getString("MARCA_AUTOMOVEL"),
                     rs.getString("MODELO_AUTOMOVEL"),
                     rs.getInt("ANO_AUTOMOVEL"),
-                    rs.getString("CPF_CLIENTE")
+                    rs.getString("Cliente_CPF_Cliente")
                 );
                 listaAutomovel.add(automovel);
             }

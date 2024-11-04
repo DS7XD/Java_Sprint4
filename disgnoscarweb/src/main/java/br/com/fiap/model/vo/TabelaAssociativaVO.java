@@ -1,13 +1,13 @@
 package br.com.fiap.model.vo;
 
-public class TabelaAssociativa {
+public class TabelaAssociativaVO {
     private String cpfCliente;
     private String idChatbot;
     private String enderecoLoja;
 
-    public TabelaAssociativa() {}
+    public TabelaAssociativaVO() {}
     
-    public TabelaAssociativa(String cpfCliente, String idChatbot, String enderecoLoja) {
+    public TabelaAssociativaVO(String cpfCliente, String idChatbot, String enderecoLoja) {
         this.cpfCliente = cpfCliente;
         this.idChatbot = idChatbot;
         this.enderecoLoja = enderecoLoja;

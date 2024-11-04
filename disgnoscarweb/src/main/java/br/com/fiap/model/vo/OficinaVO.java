@@ -1,6 +1,6 @@
 package br.com.fiap.model.vo;
 
-public class Oficina {
+public class OficinaVO {
     private String enderecoOficina;
     private String cnpjOficina;
     private String nomeOficina;
@@ -9,7 +9,7 @@ public class Oficina {
     private String chatbotId;
     private String chatbotClienteCpf;
 
-    public Oficina(String enderecoOficina, String cnpjOficina, String nomeOficina, Double avaliacaoOficina, String especializacaoOficina, String chatbotId, String chatbotClienteCpf) {
+    public OficinaVO(String enderecoOficina, String cnpjOficina, String nomeOficina, Double avaliacaoOficina, String especializacaoOficina, String chatbotId, String chatbotClienteCpf) {
         this.enderecoOficina = enderecoOficina;
         this.cnpjOficina = cnpjOficina;
         this.nomeOficina = nomeOficina;

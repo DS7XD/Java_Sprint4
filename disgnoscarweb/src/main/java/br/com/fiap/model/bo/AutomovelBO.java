@@ -3,7 +3,7 @@ package br.com.fiap.model.bo;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import br.com.fiap.model.vo.Automovel;
+import br.com.fiap.model.vo.AutomovelVO;
 import br.com.fiap.model.dao.AutomovelDAO;
 
 public class AutomovelBO {
@@ -13,11 +13,11 @@ public class AutomovelBO {
         this.automovelDAO = new AutomovelDAO();
     }
 
-    public void cadastrarAutomovel(Automovel automovel) throws ClassNotFoundException, SQLException {
+    public void cadastrarAutomovel(AutomovelVO automovel) throws ClassNotFoundException, SQLException {
         automovelDAO.AutomovelDAO_Inserir(automovel);
     }
 
-    public void atualizarAutomovel(Automovel automovel) throws ClassNotFoundException, SQLException {
+    public void atualizarAutomovel(AutomovelVO automovel) throws ClassNotFoundException, SQLException {
         automovelDAO.AutomovelDAO_Atualizar(automovel);
     }
 
@@ -25,8 +25,8 @@ public class AutomovelBO {
         automovelDAO.AutomovelDAO_Deletar(placaAutomovel);
     }
 
-    public ArrayList<Automovel> listarAutomoveis() throws ClassNotFoundException, SQLException {
-        return (ArrayList<Automovel>) automovelDAO.AutomovelDAO_Selecionar();
+    public ArrayList<AutomovelVO> listarAutomoveis() throws ClassNotFoundException, SQLException {
+        return (ArrayList<AutomovelVO>) automovelDAO.AutomovelDAO_Selecionar();
     }
 
     public boolean automovelExiste(String placaAutomovel) throws SQLException {

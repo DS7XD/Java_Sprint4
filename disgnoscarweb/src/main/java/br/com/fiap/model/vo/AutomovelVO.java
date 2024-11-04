@@ -1,13 +1,15 @@
 package br.com.fiap.model.vo;
 
-public class Automovel {
+public class AutomovelVO {
     private String placaAutomovel;    
     private String marcaAutomovel;    
     private String modeloAutomovel;       
     private int anoAutomovel;          
     private String clienteCpfCliente;  
-
-    public Automovel(String placaAutomovel, String marcaAutomovel, String modeloAutomovel, int anoAutomovel, String clienteCpfCliente) {
+    
+    public AutomovelVO() {}
+    
+    public AutomovelVO(String placaAutomovel, String marcaAutomovel, String modeloAutomovel, int anoAutomovel, String clienteCpfCliente) {
         this.placaAutomovel = placaAutomovel;
         this.marcaAutomovel = marcaAutomovel;
         this.modeloAutomovel = modeloAutomovel;

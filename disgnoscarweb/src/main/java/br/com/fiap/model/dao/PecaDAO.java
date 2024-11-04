@@ -1,6 +1,6 @@
 package br.com.fiap.model.dao;
 
-import br.com.fiap.model.vo.Peca;
+import br.com.fiap.model.vo.PecaVO;
 import br.com.fiap.connection.ConnDAO;
 
 import java.sql.Connection;
@@ -30,7 +30,7 @@ public class PecaDAO {
     }
 
     // Inserir
-    public String PecaDAO_Inserir(Peca peca) throws SQLException {
+    public String PecaDAO_Inserir(PecaVO peca) throws SQLException {
         String sql = "INSERT INTO PECA (ID_PECA, TIPO_PECA, NOME_PECA, DESCRICAO_PECA, LOJA_PARCEIRA_ENDERECO) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, peca.getIdPeca());
@@ -58,7 +58,7 @@ public class PecaDAO {
     }
 
     // Atualizar
-    public String PecaDAO_Atualizar(Peca peca) throws SQLException {
+    public String PecaDAO_Atualizar(PecaVO peca) throws SQLException {
         String sql = "UPDATE PECA SET TIPO_PECA = ?, NOME_PECA = ?, DESCRICAO_PECA = ?, LOJA_PARCEIRA_ENDERECO = ? WHERE ID_PECA = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, peca.getTipoPeca());
@@ -74,15 +74,15 @@ public class PecaDAO {
     }
 
     // Selecionar
-    public List<Peca> PecaDAO_Selecionar() throws SQLException {
-        List<Peca> listaPecas = new ArrayList<>();
+    public List<PecaVO> PecaDAO_Selecionar() throws SQLException {
+        List<PecaVO> listaPecas = new ArrayList<>();
         String sql = "SELECT * FROM PECA";
         
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
              
             while (rs.next()) {
-                Peca peca = new Peca(
+                PecaVO peca = new PecaVO(
                     rs.getString("ID_PECA"),
                     rs.getString("TIPO_PECA"),
                     rs.getString("NOME_PECA"),

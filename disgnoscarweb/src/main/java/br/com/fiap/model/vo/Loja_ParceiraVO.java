@@ -1,13 +1,13 @@
 package br.com.fiap.model.vo;
 
-public class Loja_Parceira {
+public class Loja_ParceiraVO {
     private String enderecoLoja;          // Endereco_Loja
     private String cnpjLoja;              // Cnpj_Loja
     private String nomeLoja;              // Nome_Loja
     private Double avaliacaoLoja;         // Avaliacao_Loja
     private String especializacaoLoja;    // Especializacao_Loja
 
-    public Loja_Parceira(String enderecoLoja, String cnpjLoja, String nomeLoja, Double avaliacaoLoja, String especializacaoLoja) {
+    public Loja_ParceiraVO(String enderecoLoja, String cnpjLoja, String nomeLoja, Double avaliacaoLoja, String especializacaoLoja) {
         this.enderecoLoja = enderecoLoja;
         this.cnpjLoja = cnpjLoja;
         this.nomeLoja = nomeLoja;

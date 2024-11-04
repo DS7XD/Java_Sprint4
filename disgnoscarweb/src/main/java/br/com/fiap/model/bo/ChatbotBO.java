@@ -1,15 +1,14 @@
-// ChatbotBO.java
 package br.com.fiap.model.bo;
 
 import br.com.fiap.model.dao.ChatbotDAO;
-import br.com.fiap.model.vo.Chatbot;
+import br.com.fiap.model.vo.ChatbotVO;
 import java.sql.SQLException;
 import java.util.List;
 
 public class ChatbotBO {
-    private ChatbotDAO chatbotDAO = new ChatbotDAO();
+    private ChatbotDAO chatbotDAO;
 
-    public String cadastrarChatbot(Chatbot chatbot) throws SQLException {
+    public String cadastrarChatbot(ChatbotVO chatbot) throws SQLException {
         if (chatbot.getIdChatbot() == null || chatbot.getIdChatbot().trim().isEmpty()) {
             throw new IllegalArgumentException("ID do chatbot não pode estar vazio");
         }
@@ -21,7 +20,7 @@ public class ChatbotBO {
         return chatbotDAO.ChatbotDAO_Inserir(chatbot);
     }
 
-    public String atualizarChatbot(Chatbot chatbot) throws SQLException {
+    public String atualizarChatbot(ChatbotVO chatbot) throws SQLException {
         if (chatbot.getIdChatbot() == null || chatbot.getIdChatbot().trim().isEmpty()) {
             throw new IllegalArgumentException("ID do chatbot não pode estar vazio");
         }
@@ -35,7 +34,7 @@ public class ChatbotBO {
         return chatbotDAO.ChatbotDAO_Deletar(id);
     }
 
-    public List<Chatbot> listarChatbots() throws SQLException {
+    public List<ChatbotVO> listarChatbots() throws SQLException {
         return chatbotDAO.ChatbotDAO_Selecionar();
     }
 }

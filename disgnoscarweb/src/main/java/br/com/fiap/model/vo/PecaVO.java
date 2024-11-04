@@ -1,13 +1,13 @@
 package br.com.fiap.model.vo;
 
-public class Peca {
+public class PecaVO {
     private String idPeca; 
     private String tipoPeca;
     private String nomePeca;             
     private String descricaoPeca;       
     private String lojaParceiraEndereco; 
 
-    public Peca(String idPeca, String tipoPeca, String nomePeca, String descricaoPeca, String lojaParceiraEndereco) {
+    public PecaVO(String idPeca, String tipoPeca, String nomePeca, String descricaoPeca, String lojaParceiraEndereco) {
         this.idPeca = idPeca;
         this.tipoPeca = tipoPeca;
         this.nomePeca = nomePeca;

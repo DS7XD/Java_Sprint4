@@ -1,15 +1,14 @@
-// PreDiagnosticoBO.java
 package br.com.fiap.model.bo;
 
 import br.com.fiap.model.dao.PreDiagnosticoDAO;
-import br.com.fiap.model.vo.PreDiagnostico;
+import br.com.fiap.model.vo.PreDiagnosticoVO;
 import java.sql.SQLException;
 import java.util.List;
 
 public class PreDiagnosticoBO {
-    private PreDiagnosticoDAO preDiagnosticoDAO = new PreDiagnosticoDAO();
+    private PreDiagnosticoDAO preDiagnosticoDAO;
 
-    public String cadastrarPreDiagnostico(PreDiagnostico preDiagnostico) throws SQLException {
+    public String cadastrarPreDiagnostico(PreDiagnosticoVO preDiagnostico) throws SQLException {
         if (preDiagnostico.getIdPreDiagnostico() == null || preDiagnostico.getIdPreDiagnostico().trim().isEmpty()) {
             throw new IllegalArgumentException("ID do pré-diagnóstico não pode estar vazio");
         }
@@ -21,7 +20,7 @@ public class PreDiagnosticoBO {
         return preDiagnosticoDAO.PreDiagnosticoDAO_Inserir(preDiagnostico);
     }
 
-    public String atualizarPreDiagnostico(PreDiagnostico preDiagnostico) throws SQLException {
+    public String atualizarPreDiagnostico(PreDiagnosticoVO preDiagnostico) throws SQLException {
         if (preDiagnostico.getIdPreDiagnostico() == null || preDiagnostico.getIdPreDiagnostico().trim().isEmpty()) {
             throw new IllegalArgumentException("ID do pré-diagnóstico não pode estar vazio");
         }
@@ -35,7 +34,7 @@ public class PreDiagnosticoBO {
         return preDiagnosticoDAO.PreDiagnosticoDAO_Deletar(id);
     }
 
-    public List<PreDiagnostico> listarPreDiagnosticos() throws SQLException {
+    public List<PreDiagnosticoVO> listarPreDiagnosticos() throws SQLException {
         return preDiagnosticoDAO.PreDiagnosticoDAO_Selecionar();
     }
 }

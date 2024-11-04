@@ -2,7 +2,7 @@ package br.com.fiap.model.vo;
 
 import java.util.Date;
 
-public class Cliente {
+public class ClienteVO {
     private String cpfCliente;        
     private String cnhCliente;        
     private String rgCliente;         
@@ -14,10 +14,10 @@ public class Cliente {
     private String telefoneCliente;
     private String enderecoCliente;
     
-    public Cliente() {
+    public ClienteVO() {
     }
     
-    public Cliente(String cpfCliente, String cnhCliente, String rgCliente, String nomeCliente, String sobrenomeCliente, Date dataNascCliente, String emailCliente, String senhaCliente, String telefoneCliente, String enderecoCliente) {
+    public ClienteVO(String cpfCliente, String cnhCliente, String rgCliente, String nomeCliente, String sobrenomeCliente, Date dataNascCliente, String emailCliente, String senhaCliente, String telefoneCliente, String enderecoCliente) {
         this.cpfCliente = cpfCliente;
         this.cnhCliente = cnhCliente;
         this.rgCliente = rgCliente;

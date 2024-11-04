@@ -1,6 +1,6 @@
 package br.com.fiap.model.dao;
 
-import br.com.fiap.model.vo.Cliente;
+import br.com.fiap.model.vo.ClienteVO;
 import br.com.fiap.connection.ConnDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,7 +31,7 @@ public class ClienteDAO {
         return false;
     }
 
-    public String ClienteDAO_Inserir(Cliente cliente) throws SQLException {
+    public String ClienteDAO_Inserir(ClienteVO cliente) throws SQLException {
         String sql = "INSERT INTO CLIENTE (CPF_CLIENTE, CNH_CLIENTE, RG_CLIENTE, NOME_CLIENTE, SOBRENOME_CLIENTE, DataNasc_Cliente, EMAIL_CLIENTE, SENHA_CLIENTE, TELEFONE_CLIENTE, ENDERECO_CLIENTE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, cliente.getCpfCliente());
@@ -58,7 +58,7 @@ public class ClienteDAO {
         return "Cliente deletado com sucesso!";
     }
 
-    public String ClienteDAO_Atualizar(Cliente cliente) throws SQLException {
+    public String ClienteDAO_Atualizar(ClienteVO cliente) throws SQLException {
         String sql = "UPDATE CLIENTE SET CNH_CLIENTE = ?, RG_CLIENTE = ?, NOME_CLIENTE = ?, SOBRENOME_CLIENTE = ?, DATANASC_CLIENTE = ?, EMAIL_CLIENTE = ?, SENHA_CLIENTE = ?, TELEFONE_CLIENTE = ?, ENDERECO_CLIENTE = ? WHERE CPF_CLIENTE = ?";
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setString(1, cliente.getCnhCliente());
@@ -76,14 +76,14 @@ public class ClienteDAO {
         return "Cliente atualizado com sucesso!";
     }
 
-    public List<Cliente> ClienteDAO_Selecionar() throws SQLException {
-        List<Cliente> listaCliente = new ArrayList<>();
+    public List<ClienteVO> ClienteDAO_Selecionar() throws SQLException {
+        List<ClienteVO> listaCliente = new ArrayList<>();
         String sql = "SELECT * FROM CLIENTE";
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Cliente cliente = new Cliente(
+                ClienteVO cliente = new ClienteVO(
                     rs.getString("CPF_CLIENTE"),
                     rs.getString("CNH_CLIENTE"),
                     rs.getString("RG_CLIENTE"),

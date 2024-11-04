@@ -2,14 +2,14 @@ package br.com.fiap.model.vo;
 
 import java.util.Date;
 
-public class Chatbot {
+public class ChatbotVO {
     private String idChatbot;
     private Date horarioChat;
     private String plano;
     private String clienteCpfCliente;
     private String placaAutomovel;
 
-    public Chatbot(String idChatbot, Date horarioChat, String plano, String clienteCpfCliente, String placaAutomovel) {
+    public ChatbotVO(String idChatbot, Date horarioChat, String plano, String clienteCpfCliente, String placaAutomovel) {
         this.idChatbot = idChatbot;
         this.horarioChat = horarioChat;
         this.plano = plano;
